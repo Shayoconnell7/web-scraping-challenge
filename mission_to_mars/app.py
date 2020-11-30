@@ -20,7 +20,8 @@ info_dict = db.info_dict
 @app.route("/")
 def index():
     # write a statement that finds all the items in the db and sets it to a variable
-    info_dict.insert_one(scrape)
+    scraped_data = scrape
+    info_dict.insert_one(scraped_data)
     
     print(info_dict)
 
