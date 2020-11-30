@@ -1,6 +1,6 @@
 # 1. import Flask
 from flask import Flask, render_template
-from scrape_mars import scrape
+import scrape_mars 
 import pymongo
 
 # 2. Create an app, being sure to pass __name__
@@ -16,17 +16,24 @@ client = pymongo.MongoClient(conn)
 db = client.mars_info
 info_dict = db.info_dict
 
-#homepage
-@app.route("/")
-def index():
+# #homepage
+# @app.route("/")
+# def index():
+
+@app.route("/scrape")
+def scrape():
+    mars_data = scrape_mars.scrape()
     # write a statement that finds all the items in the db and sets it to a variable
-    scraped_data = scrape
-    info_dict.insert_one(scraped_data)
+    
+    info_dict.insert_one(mars_data)
     
     print(info_dict)
 
     # render an index.html template and pass it the data you retrieved from the database
     return render_template("index.html", inventory=inventory)
+
+
+    dictionary = dict(zip(teaser.text, title.text, featured_image_url, mars_html_table, hemisphere_image_urls))
 
 #scrape_mars.scrape
 

@@ -18,11 +18,8 @@ import requests
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
 
-app = Flask(__name__)
 
-@app.route("/scrape")
 def scrape():
-
     executable_path = {"executable_path": "chromedriver"}
     browser = Browser("chrome", **executable_path, headless=False)
 
@@ -54,9 +51,6 @@ def scrape():
     title.text
 
     print(f"The latest headline: {title.text}.\nThe summary: {teaser.text}")
-
-    # ## JPL Mars Space Images - Featured Image
-    #
 
     # +
     url = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
@@ -134,6 +128,18 @@ def scrape():
     hemisphere_image_urls
 
 
+    data = {
+            "news_title": title,
+            "news_paragraph": teaser,
+            "featured_image": featured_image_url,
+            "facts": mars_html_table,
+            "hemispheres": hemisphere_image_urls,
+           
+        }
+    return data
+   # dictionary = dict(zip(teaser.text, title.text, featured_image_url, mars_html_table, hemisphere_image_urls))
+
+ #"last_modified": last_modified
 
 
 
