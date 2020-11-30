@@ -17,24 +17,25 @@ import pandas as pd
 import requests
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
+import datetime as dt
 
 
-def scrape():
-    executable_path = {"executable_path": "chromedriver"}
-    browser = Browser("chrome", **executable_path, headless=False)
 
-    # +
-    # browser = init_browser()
+executable_path = {"executable_path": "chromedriver"}
+browser = Browser("chrome", **executable_path, headless=False)
+# Optional delay for loading the page
+browser.is_element_present_by_css("ul.item_list li.slide", wait_time=1)
 
+    
+def mars_news_f(browser):
     url = "https://mars.nasa.gov/news/"
     browser.visit(url)
+    browser.is_element_present_by_css("ul.item_list li.slide", wait_time=1)
 
     html = browser.html
     soup = bs(html, "html.parser")
 
-    # -
 
-    # ## NASA Mars News
 
     sidebar = soup.find('ul', class_='item_list')
     print(sidebar)
@@ -46,13 +47,16 @@ def scrape():
         title = article.select_one('div.content_title a')
         
 
-    teaser.text
+    teaser_text = teaser.text
 
-    title.text
+    title_text = title.text
 
-    print(f"The latest headline: {title.text}.\nThe summary: {teaser.text}")
+    print(f"The latest headline: {title_text}.\nThe summary: {teaser_text}")
 
+    return teaser_text, title_text
     # +
+
+def featured_image_f(browser):
     url = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
     browser.visit(url)
     short_url = "https://www.jpl.nasa.gov"
@@ -69,8 +73,9 @@ def scrape():
     featured_image_url = (short_url+extension)
     print(f"url is {featured_image_url}")
 
+    return featured_image_url
     # ## Mars Facts
-
+def mars_facts_f(browser):
     # +
     url = "https://space-facts.com/mars/"
     browser.visit(url)
@@ -93,6 +98,9 @@ def scrape():
 
     mars_html_table.replace('\n', '')
 
+    return mars_html_table
+
+def hemisphere_f(browser):
     # ## Mars Hemispheres
 
     url = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
@@ -125,20 +133,22 @@ def scrape():
         browser.back()
     # -
 
-    hemisphere_image_urls
+    return hemisphere_image_urls
 
-
+def scrape():
     data = {
-            "news_title": title,
-            "news_paragraph": teaser,
-            "featured_image": featured_image_url,
-            "facts": mars_html_table,
-            "hemispheres": hemisphere_image_urls,
-           
+            "news_title": mars_news_f(browser)[1],
+            "news_paragraph": mars_news_f(browser)[0],
+            "featured_image": featured_image_f(browser),
+            "facts": mars_facts_f(browser),
+            "hemispheres": hemisphere_f(browser),
+            "last_modified": dt.datetime.now()
         }
     return data
    # dictionary = dict(zip(teaser.text, title.text, featured_image_url, mars_html_table, hemisphere_image_urls))
-
+if __name__ == "__main__":
+   # If running as script, print scraped data
+   print(scrape())
  #"last_modified": last_modified
 
 

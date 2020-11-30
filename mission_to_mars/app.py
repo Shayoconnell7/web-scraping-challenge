@@ -1,5 +1,5 @@
 # 1. import Flask
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 import scrape_mars 
 import pymongo
 
@@ -16,32 +16,19 @@ client = pymongo.MongoClient(conn)
 db = client.mars_info
 info_dict = db.info_dict
 
-# #homepage
-# @app.route("/")
-# def index():
-
 @app.route("/scrape")
-def scrape():
+def scraper():
     mars_data = scrape_mars.scrape()
-    # write a statement that finds all the items in the db and sets it to a variable
     
     info_dict.insert_one(mars_data)
     
     print(info_dict)
+    return mars_data, redirect("/")
 
+@app.route("/")
+def home():
     # render an index.html template and pass it the data you retrieved from the database
-    return render_template("index.html", inventory=inventory)
-
-
-    dictionary = dict(zip(teaser.text, title.text, featured_image_url, mars_html_table, hemisphere_image_urls))
-
-#scrape_mars.scrape
-
-# 4. Define what to do when a user hits the /scrape route
-# @app.route("/scrape")
-# def about():
-#     print("Server received request for 'About' page...")
-#     return "Welcome to my 'About' page!"
+    return render_template("index.html", mars_data=info_dict)
 
 
 if __name__ == "__main__":
