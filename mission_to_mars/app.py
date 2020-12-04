@@ -13,22 +13,23 @@ client = pymongo.MongoClient(conn)
 
 # connect to mongo db and collection
 
-db = client.mars_info
-info_dict = db.info_dict
+# db = client.mars_info
+# info_dict = db.info_dict
 
 @app.route("/scrape")
 def scraper():
-    mars_data = scrape_mars.scrape()
+    mars_info = client.db.mars_info
+    mars_scrape = scrape_mars.scrape()
     
-    info_dict.insert_one(mars_data)
+    mars_info.replace_one({}, mars_scrape, upsert=True)
     
-    print(info_dict)
-    return mars_data, redirect("/")
+    return redirect("/")
 
 @app.route("/")
 def home():
+
     # render an index.html template and pass it the data you retrieved from the database
-    return render_template("index.html", mars_data=info_dict)
+    return render_template("index.html", mars_data=mars_info)
 
 
 if __name__ == "__main__":

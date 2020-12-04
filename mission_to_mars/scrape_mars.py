@@ -142,7 +142,7 @@ def scrape():
             "last_modified": dt.datetime.now()
         }
     return data
-   # dictionary = dict(zip(teaser.text, title.text, featured_image_url, mars_html_table, hemisphere_image_urls))
+
 if __name__ == "__main__":
    # If running as script, print scraped data
    print(scrape())
