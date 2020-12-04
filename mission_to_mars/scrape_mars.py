@@ -64,14 +64,11 @@ def featured_image_f(browser):
     html = browser.html
     soup = bs(html, "html.parser")
     # -
-
-    med_extension = soup.find("div", class_="carousel_items").a["data-fancybox-href"]
-    med_image_url = (short_url+med_extension)
-    print(f"url is {med_image_url}")
-
-    extension = soup.find("li", class_="slide").a["data-fancybox-href"]
-    featured_image_url = (short_url+extension)
-    print(f"url is {featured_image_url}")
+    browser.click_link_by_partial_text("FULL")
+    browser.click_link_by_partial_text("more info")
+    browser.click_link_by_partial_href('hires')
+    featured_image_url = browser.url
+    
 
     return featured_image_url
     # ## Mars Facts
@@ -149,7 +146,7 @@ def scrape():
 if __name__ == "__main__":
    # If running as script, print scraped data
    print(scrape())
- #"last_modified": last_modified
+ 
 
 
 
