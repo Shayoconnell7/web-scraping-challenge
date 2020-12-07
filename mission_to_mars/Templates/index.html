@@ -30,14 +30,45 @@
                     <h2 class="heading">Featured Mars Image</h2>
                     <img class="image" src="{{mars_data.featured_image_url}}" />
                 </div>
+            </div>
+            <div class="col-md-6">
                 <div class="box2">
                     <h2 class="heading">Facts About Mars</h2>
                     <table border="1" class="table">
-                        <h3>{{mars_data.mars_html_table}}</h3>
+                        <h3>{{mars_data.mars_html_table|safe}}</h3>
                     </table>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box1">
+                    <h2 class="heading">Mars Hemispheres</h2>
+                <hr>
+                </div>
+            </div>        
+        <div class="row">
+            <div class="col-md-3"> 
+                <div class="box1">
+                <h3>{{mars_data.hemisphere_image_urls[0]}}</h3>
+                </div>
+            </div>
+            <div class="col-md-3"> 
+                <div class="box1">
+                <h3>{{mars_data.hemisphere_image_urls[1]}}</h3>
+                </div>
+            </div>
+            <div class="col-md-3"> 
+                <div class="box1">
+                <h3>{{mars_data.hemisphere_image_urls[2]}}</h3>
+                </div>
+            </div>
+            <div class="col-md-3"> 
+                <div class="box1">
+                <h3>{{mars_data.hemisphere_image_urls[3]}}</h3>
+                </div>
+            </div>
+        </div>  
     </div>
   </div>
 
@@ -48,3 +79,18 @@
 </body>
 
 </html>
+
+<!-- 
+"Jinja2 template variable if None Object set a default value" following is one of the solutions learned from Stackoverflow:
+
+Use the none builtin function (http://jinja.pocoo.org/docs/templates/#none):
+
+      {% if mars is not None %}   
+      {{ mars.mars_hemisphere[i].image_url }}
+      {% else %}
+       NONE
+      {%endif %}
+      or   {{ mars.mars_hemisphere[i].image_url if mars != None else 'NONE' }}
+      or if you need an empty string:
+
+       {{ mars.mars_hemisphere[i].image_url  if mars != None }} -->

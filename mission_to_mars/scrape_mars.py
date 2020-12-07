@@ -18,10 +18,11 @@ import requests
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
 import datetime as dt
+from selenium import webdriver
 
 
 
-executable_path = {"executable_path": "chromedriver"}
+executable_path = {"executable_path": "chromedriver.exe"}
 browser = Browser("chrome", **executable_path, headless=False)
 # Optional delay for loading the page
 browser.is_element_present_by_css("ul.item_list li.slide", wait_time=1)
@@ -59,10 +60,9 @@ def mars_news_f(browser):
 def featured_image_f(browser):
     url = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
     browser.visit(url)
-    short_url = "https://www.jpl.nasa.gov"
 
     html = browser.html
-    soup = bs(html, "html.parser")
+
     # -
     browser.click_link_by_partial_text("FULL")
     browser.click_link_by_partial_text("more info")
@@ -78,7 +78,7 @@ def mars_facts_f(browser):
     browser.visit(url)
 
     html = browser.html
-    soup = bs(html, "html.parser")
+    
     # -
 
     tables = pd.read_html(url)
