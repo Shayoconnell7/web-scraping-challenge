@@ -68,9 +68,9 @@ def scraper():
 
     mars.update({}, mars_scrape, upsert=True)
 
-    return "successfull"
+    return redirect("/")
 
 
 
 if __name__ == "__main__":
-    app.run
+    app.run(debug=True)

@@ -50,22 +50,22 @@
         <div class="row">
             <div class="col-md-3"> 
                 <div class="box1">
-                <h3>{{mars_data.hemisphere_image_urls[0]}}</h3>
+                <h3>{{mars_data.hemisphere_image_urls}}</h3>
                 </div>
             </div>
             <div class="col-md-3"> 
                 <div class="box1">
-                <h3>{{mars_data.hemisphere_image_urls[1]}}</h3>
+                <h3>{{mars_data.hemisphere_image_urls}}</h3>
                 </div>
             </div>
             <div class="col-md-3"> 
                 <div class="box1">
-                <h3>{{mars_data.hemisphere_image_urls[2]}}</h3>
+                <h3>{{mars_data.hemisphere_image_urls}}</h3>
                 </div>
             </div>
             <div class="col-md-3"> 
                 <div class="box1">
-                <h3>{{mars_data.hemisphere_image_urls[3]}}</h3>
+                <h3>{{mars_data.hemisphere_image_urls}}</h3>
                 </div>
             </div>
         </div>  
@@ -80,17 +80,3 @@
 
 </html>
 
-<!-- 
-"Jinja2 template variable if None Object set a default value" following is one of the solutions learned from Stackoverflow:
-
-Use the none builtin function (http://jinja.pocoo.org/docs/templates/#none):
-
-      {% if mars is not None %}   
-      {{ mars.mars_hemisphere[i].image_url }}
-      {% else %}
-       NONE
-      {%endif %}
-      or   {{ mars.mars_hemisphere[i].image_url if mars != None else 'NONE' }}
-      or if you need an empty string:
-
-       {{ mars.mars_hemisphere[i].image_url  if mars != None }} -->

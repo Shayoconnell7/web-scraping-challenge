@@ -21,17 +21,14 @@ import datetime as dt
 from selenium import webdriver
 
 
-
-executable_path = {"executable_path": "chromedriver.exe"}
-browser = Browser("chrome", **executable_path, headless=False)
-# Optional delay for loading the page
-browser.is_element_present_by_css("ul.item_list li.slide", wait_time=1)
-
     
 def mars_news_f(browser):
+
+    browser.is_element_present_by_css("ul.item_list li.slide", wait_time=1)
+
     url = "https://mars.nasa.gov/news/"
     browser.visit(url)
-    browser.is_element_present_by_css("ul.item_list li.slide", wait_time=1)
+    
 
     html = browser.html
     soup = bs(html, "html.parser")
@@ -133,6 +130,10 @@ def hemisphere_f(browser):
     return hemisphere_image_urls
 
 def scrape():
+    
+    executable_path = {"executable_path": "chromedriver.exe"}
+    browser = Browser("chrome", **executable_path, headless=False)
+
     data = {
             "news_title": mars_news_f(browser)[1],
             "news_paragraph": mars_news_f(browser)[0],
