@@ -18,6 +18,7 @@ import requests
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
 import datetime as dt
+import time
 from selenium import webdriver
 
 
@@ -34,7 +35,7 @@ def mars_news_f(browser):
     soup = bs(html, "html.parser")
 
 
-
+    time.sleep(7)
     sidebar = soup.find('ul', class_='item_list')
     print(sidebar)
 

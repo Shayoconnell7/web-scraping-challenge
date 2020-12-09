@@ -10,10 +10,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="text-white" style="background-color:rgb(7, 7, 58)">
   <div class="container text-center">
-    <h1 class="title">Mission to Mars</h1>
-    <p> <a class="button" href="/scrape">Get Latest Update</a></p>
+    <div class="jumbotron text-center" style="background-color:black">
+        <h1 class="title" style="color:darkred">Mission to Mars</h1>
+        <p> <a class="button" href="/scrape">Get Latest Update</a></p>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -28,7 +30,7 @@
             <div class="col-md-6">
                 <div class="box2">
                     <h2 class="heading">Featured Mars Image</h2>
-                    <img class="image" src="{{mars_data.featured_image_url}}" />
+                    <img class="image" src="{{mars_data.featured_image_f}}" />
                 </div>
             </div>
             <div class="col-md-6">
