@@ -60,7 +60,7 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/mars_info")
 def home():
     mars = mongo.db.mars.find_one()
     # render an index.html template and pass it the data you retrieved from the database
-    return render_template("index.html", mars_data=mars)
+    return render_template("index.html", mars=mars)
 
 @app.route("/scrape")
 def scrape():

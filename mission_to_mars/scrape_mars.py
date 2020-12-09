@@ -1,17 +1,3 @@
-# ---
-# jupyter:
-#   jupytext:
-#     text_representation:
-#       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.7.1
-#   kernelspec:
-#     display_name: Python 3
-#     language: python
-#     name: python3
-# ---
-
 from flask import Flask, jsonify
 import pandas as pd
 import requests
@@ -19,10 +5,9 @@ from splinter import Browser
 from bs4 import BeautifulSoup as bs
 import datetime as dt
 import time
-from selenium import webdriver
 
 
-    
+## Get Latest News    
 def mars_news_f(browser):
 
     browser.is_element_present_by_css("ul.item_list li.slide", wait_time=1)
@@ -53,15 +38,12 @@ def mars_news_f(browser):
     print(f"The latest headline: {title_text}.\nThe summary: {teaser_text}")
 
     return teaser_text, title_text
-    # +
-
+    
+## Get Featured Image
 def featured_image_f(browser):
     url = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
     browser.visit(url)
 
-    html = browser.html
-
-    # -
     browser.click_link_by_partial_text("FULL")
     browser.click_link_by_partial_text("more info")
     browser.click_link_by_partial_href('hires')
@@ -69,39 +51,30 @@ def featured_image_f(browser):
     
 
     return featured_image_url
-    # ## Mars Facts
+    
+## Get Mars Facts
 def mars_facts_f(browser):
-    # +
+    
     url = "https://space-facts.com/mars/"
     browser.visit(url)
-
-    html = browser.html
-    
-    # -
 
     tables = pd.read_html(url)
     tables
 
     mars_info = pd.DataFrame(tables[0])
-    mars_info.columns = ['Mars', 'Data']
-    mars_info.set_index('Mars', inplace=True)
-
-    mars_info
-
-    mars_html_table = mars_info.to_html()
-    mars_html_table
+    
+    mars_html_table = mars_info.to_html(header=False, index=False)
 
     mars_html_table.replace('\n', '')
 
     return mars_html_table
 
+## Get Mars Hemispheres
 def hemisphere_f(browser):
-    # ## Mars Hemispheres
-
+   
     url = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
     browser.visit(url)
 
-    # +
     hemisphere_image_urls = []
 
     # First, get a list of all of the hemispheres
@@ -126,10 +99,11 @@ def hemisphere_f(browser):
         
         # Finally, we navigate backwards
         browser.back()
-    # -
+
 
     return hemisphere_image_urls
 
+#scrape it all and add to one dictionary
 def scrape():
     
     executable_path = {"executable_path": "chromedriver.exe"}
